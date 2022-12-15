@@ -1,0 +1,22 @@
+name: 'Deploy Nomad'
+description: 'Create & run job in nomad.'
+inputs:
+  job-id:  # id of input
+    description: 'Job id'
+    required: true
+  static-port:
+    description: 'Static port'
+    required: true
+  container-port:
+    description: 'Container prot'
+    required: true
+  image:
+    description: 'Docker image path'
+    required: true
+    
+outputs:
+  time: # id of output
+    description: 'The time we greeted you'
+runs:
+  using: 'node16'
+  main: 'index.js'

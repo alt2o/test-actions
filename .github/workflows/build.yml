@@ -1,0 +1,33 @@
+name: Build Pathfinder LiveDemo Test Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Custom Tag. Set nightly-latest will publish to development."
+        required: false
+        type: string
+  push:
+    branches: [develop]
+    
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    env:
+      TAG: ${{ inputs.tag || (github.ref_name == 'develop' && 'develop-test') || github.ref_name }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - id: custom_action
+        uses: ./
+        env:
+          token: 2222
+        with:
+          job-id: 1111
+          static-port: 123
+          container-port: 300
+      - run: echo "${{steps.custom_action.outputs.log}}"
+      - run: echo "${{steps.custom_action.outputs.time}}"
